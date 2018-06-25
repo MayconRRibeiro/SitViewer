@@ -13,7 +13,7 @@ object Form1: TForm1
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object DBGrid1: TDBGrid
+  object DBGrid: TDBGrid
     Left = 8
     Top = 39
     Width = 721
@@ -26,7 +26,7 @@ object Form1: TForm1
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnDrawColumnCell = DBGrid1DrawColumnCell
+    OnDrawColumnCell = DBGridDrawColumnCell
     Columns = <
       item
         Expanded = False

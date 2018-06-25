@@ -15,7 +15,7 @@ uses
 type
   TForm1 = class(TForm)
     DataSource1: TDataSource;
-    DBGrid1: TDBGrid;
+    DBGrid: TDBGrid;
     DBMemo1: TDBMemo;
     BitBtn1: TBitBtn;
     OpenDialog1: TOpenDialog;
@@ -33,7 +33,7 @@ type
     FDSitViewerTexto: TStringField;
     procedure BitBtn1Click(Sender: TObject);
     procedure ComboBox1Select(Sender: TObject);
-    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+    procedure DBGridDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
   end;
 
@@ -56,7 +56,7 @@ begin
   FDSitViewer.Filtered := True;
 end;
 
-procedure TForm1.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+procedure TForm1.DBGridDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
  if FDSitViewer.FieldByName('EventoLog').AsString = 'Erro'
