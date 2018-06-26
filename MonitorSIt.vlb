@@ -1,16 +1,13 @@
-﻿[DataSource1]
-Coordinates=0,0,77,33
-
-[]
-Coordinates=96,1,87,51
+﻿[]
+Coordinates=18,70,50,51
 Visible=True
 
 [DBMemo1]
 Coordinates=77,70,64,33
 
-[BitBtn1]
-Coordinates=18,70,50,51
-
-[DBGrid]
+[grSitViewer]
 Coordinates=170,10,56,33
+
+[dsSitViewer]
+Coordinates=0,0,77,33
 

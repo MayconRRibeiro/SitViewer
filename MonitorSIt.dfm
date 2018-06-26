@@ -11,14 +11,26 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  WindowState = wsMaximized
   PixelsPerInch = 96
   TextHeight = 13
-  object DBGrid: TDBGrid
-    Left = 8
-    Top = 39
-    Width = 721
-    Height = 177
-    DataSource = DataSource1
+  object splSitViewer: TSplitter
+    Left = 0
+    Top = 293
+    Width = 775
+    Height = 3
+    Cursor = crVSplit
+    Align = alBottom
+    ExplicitTop = 57
+    ExplicitWidth = 773
+  end
+  object grSitViewer: TDBGrid
+    Left = 0
+    Top = 51
+    Width = 775
+    Height = 242
+    Align = alClient
+    DataSource = dsSitViewer
     ReadOnly = True
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -26,7 +38,7 @@ object Form1: TForm1
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnDrawColumnCell = DBGridDrawColumnCell
+    OnDrawColumnCell = grSitViewerDrawColumnCell
     Columns = <
       item
         Expanded = False
@@ -78,42 +90,54 @@ object Form1: TForm1
       end>
   end
   object DBMemo1: TDBMemo
-    Left = 8
-    Top = 222
-    Width = 721
-    Height = 149
+    Left = 0
+    Top = 296
+    Width = 775
+    Height = 143
+    Align = alBottom
     DataField = 'texto'
-    DataSource = DataSource1
+    DataSource = dsSitViewer
     TabOrder = 1
   end
-  object BitBtn1: TBitBtn
-    Left = 8
-    Top = 8
-    Width = 75
-    Height = 25
-    Caption = 'Abrir Log...'
+  object pnlTop: TPanel
+    Left = 0
+    Top = 0
+    Width = 775
+    Height = 51
+    Align = alTop
     TabOrder = 2
-    OnClick = BitBtn1Click
+    object cbSitViewer: TComboBox
+      Left = 83
+      Top = 6
+      Width = 66
+      Height = 21
+      Style = csDropDownList
+      ItemIndex = 0
+      TabOrder = 0
+      Text = '[ Todos ]'
+      OnSelect = cbSitViewerSelect
+      Items.Strings = (
+        '[ Todos ]'
+        'Sql'
+        'Info'
+        'Erro')
+    end
+    object BitBtn1: TBitBtn
+      Left = 4
+      Top = 4
+      Width = 75
+      Height = 25
+      Caption = 'Abrir Log...'
+      TabOrder = 1
+      OnClick = BitBtn1Click
+    end
   end
-  object ComboBox1: TComboBox
-    Left = 89
-    Top = 8
-    Width = 145
-    Height = 21
-    Style = csDropDownList
-    TabOrder = 3
-    OnSelect = ComboBox1Select
-    Items.Strings = (
-      'Sql'
-      'Info'
-      'Error')
-  end
-  object DataSource1: TDataSource
+  object dsSitViewer: TDataSource
     DataSet = FDSitViewer
     Left = 112
     Top = 368
   end
-  object OpenDialog1: TOpenDialog
+  object openDialog: TOpenDialog
     DefaultExt = '.txt'
     FileName = '.txt'
     InitialDir = 'C:'
@@ -156,7 +180,7 @@ object Form1: TForm1
     object FDSitViewerServico: TStringField
       DisplayWidth = 12
       FieldName = 'Servico'
-      Size = 50
+      Size = 100
     end
     object FDSitViewerClasse: TStringField
       DisplayWidth = 7

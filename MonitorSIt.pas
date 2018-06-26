@@ -10,17 +10,16 @@ uses
   FireDAC.Comp.BatchMove.DataSet, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FDSitViewer;
+  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FDSitViewer,
+  Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
-    DataSource1: TDataSource;
-    DBGrid: TDBGrid;
+    dsSitViewer: TDataSource;
+    grSitViewer: TDBGrid;
     DBMemo1: TDBMemo;
-    BitBtn1: TBitBtn;
-    OpenDialog1: TOpenDialog;
+    openDialog: TOpenDialog;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
-    ComboBox1: TComboBox;
     FDSitViewer: TFDSitViewer;
     FDSitViewerData: TStringField;
     FDSitViewerHora: TStringField;
@@ -31,9 +30,13 @@ type
     FDSitViewerMetodo: TStringField;
     FDSitViewerEventoLog: TStringField;
     FDSitViewerTexto: TStringField;
+    pnlTop: TPanel;
+    cbSitViewer: TComboBox;
+    BitBtn1: TBitBtn;
+    splSitViewer: TSplitter;
     procedure BitBtn1Click(Sender: TObject);
-    procedure ComboBox1Select(Sender: TObject);
-    procedure DBGridDrawColumnCell(Sender: TObject; const Rect: TRect;
+    procedure cbSitViewerSelect(Sender: TObject);
+    procedure grSitViewerDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
   end;
 
@@ -46,23 +49,25 @@ implementation
 
 procedure TForm1.BitBtn1Click(Sender: TObject);
 begin
-  If OpenDialog1.Execute then
-    FDSitViewer.ReadLogTxt(OpenDialog1.FileName);
+  If openDialog.Execute then
+    FDSitViewer.ReadLogTxt(openDialog.FileName);
 end;
 
-procedure TForm1.ComboBox1Select(Sender: TObject);
+procedure TForm1.cbSitViewerSelect(Sender: TObject);
 begin
-  FDSitViewer.Filter := Format('eventoLog = %s',[QuotedStr(Combobox1.Text)]);
+  FDSitViewer.Filter := EmptyStr;
+  if cbSitViewer.ItemIndex <> 0 then
+    FDSitViewer.Filter := Format('eventoLog = %s',[QuotedStr(cbSitViewer.Text)]);
   FDSitViewer.Filtered := True;
 end;
 
-procedure TForm1.DBGridDrawColumnCell(Sender: TObject; const Rect: TRect;
+procedure TForm1.grSitViewerDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
  if FDSitViewer.FieldByName('EventoLog').AsString = 'Erro'
  then
-  DBGrid1.Canvas.Brush.Color:=clRed;
- DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  grSitViewer.Canvas.Brush.Color:=$006262FF;
+ grSitViewer.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 end.
