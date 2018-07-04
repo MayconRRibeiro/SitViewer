@@ -3,14 +3,14 @@
 	<Transactions>
     <Transaction>2018/06/18 13:58:19.000.354,=rtl.dcp</Transaction>
     <Transaction>2018/06/18 13:58:33.000.071,=rtl.dcp</Transaction>
-    <Transaction>2018/06/18 13:59:11.000.854,C:\Users\m1kro\OneDrive\Documents\Embarcadero\Studio\Projects\MonitorSIT\PacoteComponente.dproj=C:\Users\m1kro\OneDrive\Documents\Embarcadero\Studio\Projects\Package1.dproj</Transaction>
-    <Transaction>2018/06/18 14:01:28.000.718,=dbrtl.dcp</Transaction>
-    <Transaction>2018/06/18 14:01:28.000.755,=FireDACSqliteDriver.dcp</Transaction>
-    <Transaction>2018/06/18 14:01:28.000.662,=C:\Users\m1kro\OneDrive\Documents\Embarcadero\Studio\Projects\MonitorSIT\FDSitViewer.pas</Transaction>
-    <Transaction>2018/06/18 14:01:28.000.793,=xmlrtl.dcp</Transaction>
-    <Transaction>2018/06/18 14:01:28.000.736,=FireDAC.dcp</Transaction>
-    <Transaction>2018/06/18 14:01:28.000.780,=FireDACCommon.dcp</Transaction>
+    <Transaction>2018/06/18 13:59:11.000.854,C:\Users\m1kro\OneDrive\Documents\Embarcadero\Studio\Projects\Package1.dproj=C:\Users\m1kro\OneDrive\Documents\Embarcadero\Studio\Projects\MonitorSIT\PacoteComponente.dproj</Transaction>
     <Transaction>2018/06/18 14:01:28.000.768,=FireDACCommonDriver.dcp</Transaction>
+    <Transaction>2018/06/18 14:01:28.000.662,=C:\Users\m1kro\OneDrive\Documents\Embarcadero\Studio\Projects\MonitorSIT\FDSitViewer.pas</Transaction>
+    <Transaction>2018/06/18 14:01:28.000.755,=FireDACSqliteDriver.dcp</Transaction>
+    <Transaction>2018/06/18 14:01:28.000.793,=xmlrtl.dcp</Transaction>
+    <Transaction>2018/06/18 14:01:28.000.780,=FireDACCommon.dcp</Transaction>
+    <Transaction>2018/06/18 14:01:28.000.736,=FireDAC.dcp</Transaction>
+    <Transaction>2018/06/18 14:01:28.000.718,=dbrtl.dcp</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="FDSitViewer.pas"/>

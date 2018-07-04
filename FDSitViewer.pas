@@ -16,6 +16,7 @@ type
     procedure GetValueLogTxt(pLogData: TFDMemTable;const pSlRegister: TStringList);
     procedure InitSitViewer;
     function getSvTexto(const pSlRegister: TStringList): integer;
+    function FixLineRegister(var pnIndexLine: integer;const pslArchive: TStringList): string;
   public
     procedure ReadLogTxt(psFileName: String);
   end;
@@ -31,10 +32,11 @@ type
 
 procedure TFDSitViewer.ReadLogTxt(psFileName: String);
 var
-  nCont: integer;
+  nIndexLine: integer;
   slArchive: TStringList;
   slRegister: TStringList;
-  sLine: string;
+  sOriginalLine: string;
+  sFormattedLine: string;
   nTextPosition:integer;
 begin
   slArchive := TStringList.Create;
@@ -46,17 +48,27 @@ begin
       slRegister.Delimiter := ';';
       slRegister.StrictDelimiter := True;
 
-      for nCont := 0 to Pred(slArchive.Count) do
+      nIndexLine := 0;
+      while nIndexLine < slArchive.Count do
       begin
-        sLine := slArchive[nCont];
-        nTextPosition := Pos('texto=', sLine);
+        sOriginalLine := slArchive[nIndexLine];
+        nTextPosition := Pos('texto=', sOriginalLine);
 
-        sLine := Copy(sLine, 1, nTextPosition);
-        sLine := StringReplace(sLine, ',', ';', [rfReplaceAll]);
-        sLine := sLine + Copy(slArchive[nCont], nTextPosition, slArchive[nCont].Length);
+        if nTextPosition = 0 then
+        begin
+          sOriginalLine := FixLineRegister(nIndexLine,slArchive);
+          nTextPosition := Pos('texto=', sOriginalLine);
+          Self.Delete;
+        end;
 
-        slRegister.DelimitedText := sLine;
+        sFormattedLine := Copy(sOriginalLine, 1, nTextPosition);
+        sFormattedLine := StringReplace(sFormattedLine, ',', ';', [rfReplaceAll]);
+        sFormattedLine := sFormattedLine +
+          Copy(sOriginalLine, nTextPosition, sOriginalLine.Length);
+
+        slRegister.DelimitedText := sFormattedLine;
         GetValueLogTxt(Self,slRegister);
+        nIndexLine := Succ(nIndexLine);
       end;
     finally
       FreeAndNil(slRegister);
@@ -74,19 +86,19 @@ begin
   svTexto := getSvTexto(pSlRegister);
   with pSlRegister do
   begin
-  pLogData.AppendRecord(
-    [
-      GetValue(Ord(svData)),
-      GetValue(Ord(svHora)),
-      GetValue(Ord(svIpServidor)),
-      GetValue(Ord(svBase)),
-      GetValue(Ord(svServico)),
-      GetValue(Ord(svClasse)),
-      GetValue(Ord(svMetodo)),
-      GetValue(Ord(svEventoLog)),
-      GetValue(svTexto)
-    ]
-  );
+    pLogData.AppendRecord(
+      [
+        GetValue(Ord(svData)),
+        GetValue(Ord(svHora)),
+        GetValue(Ord(svIpServidor)),
+        GetValue(Ord(svBase)),
+        GetValue(Ord(svServico)),
+        GetValue(Ord(svClasse)),
+        GetValue(Ord(svMetodo)),
+        GetValue(Ord(svEventoLog)),
+        GetValue(svTexto)
+      ]
+    );
   end;
 end;
 
@@ -94,6 +106,20 @@ procedure TFDSitViewer.InitSitViewer;
 begin
   if not Self.Active then
     Self.Open;
+end;
+
+function TFDSitViewer.FixLineRegister(var pnIndexLine: integer;const pslArchive: TStringList): string;
+var
+  sLine: string;
+begin
+  sLine := pslArchive[Pred(pnIndexLine)];
+  while Pos('data="', pslArchive[pnIndexLine]) = 0 do
+  begin
+    sLine := sLine+pslArchive[pnIndexLine];
+    pnIndexLine := Succ(pnIndexLine);
+  end;
+  pnIndexLine := Pred(pnIndexLine);
+  result := sLine;
 end;
 
 function TFDSitViewer.getSvTexto(const pSlRegister: TStringList): integer;

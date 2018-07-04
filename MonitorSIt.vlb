@@ -1,12 +1,6 @@
 ﻿[]
-Coordinates=18,70,50,51
-Visible=True
-
-[DBMemo1]
 Coordinates=77,70,64,33
-
-[grSitViewer]
-Coordinates=170,10,56,33
+Visible=True
 
 [dsSitViewer]
 Coordinates=0,0,77,33
