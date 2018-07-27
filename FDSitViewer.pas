@@ -127,12 +127,6 @@ var
   svTexto: integer;
 begin
   svTexto := 10;
-{ //Item a Discutir  {
-if (pSlRegister.GetValue(Ord(svMetodo)) = 'Execute') Or
-    (pSlRegister.GetValue(Ord(svMetodo)) = 'Inicializar') Or
-    (pSlRegister.GetValue(Ord(svMetodo)) = 'ExecutarServico') then
-}
-  // <= 5 Equals to Maximum Length of ThreadId Row And we want to Ignore It.
   if pSlRegister.GetValue(svTexto).Length <= 5 then
     svTexto := 11;
   result := svTexto;
