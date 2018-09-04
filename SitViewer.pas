@@ -18,7 +18,6 @@ type
   TfrmSitViewer = class(TForm)
     dsSitViewer: TDataSource;
     openDialog: TOpenDialog;
-    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     FDSitViewer: TFDSitViewer;
     FDSitViewerData: TStringField;
     FDSitViewerHora: TStringField;
@@ -33,7 +32,6 @@ type
     tsDirectory: TTabSheet;
     tsSitViewer: TTabSheet;
     grSitViewer: TDBGrid;
-    tsDataOptions: TTabSheet;
     pnlTop: TPanel;
     pnlLeft: TPanel;
     pnlRight: TPanel;
@@ -41,7 +39,7 @@ type
     flBox: TFileListBox;
     splMiddleDirectory: TSplitter;
     grpGridFilter: TGroupBox;
-    cbSitViewer: TComboBox;
+    cbFilterEventoLog: TComboBox;
     lblFilterEventoLog: TLabel;
     pnlBot: TPanel;
     splSitViewer: TSplitter;
@@ -65,14 +63,24 @@ type
     lblServico: TLabel;
     lblClasse: TLabel;
     lblEventoLog: TLabel;
+    lbRegisters: TLabel;
+    lbQtRegisters: TLabel;
+    lblFiltro: TLabel;
+    edtFiltro: TEdit;
+    tsOpcoes: TTabSheet;
+    lblFilterMetodo: TLabel;
+    cbFilterMetodo: TComboBox;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     procedure BitBtn1Click(Sender: TObject);
-    procedure cbSitViewerSelect(Sender: TObject);
+    procedure cbFilterEventoLogSelect(Sender: TObject);
     procedure grSitViewerDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
     procedure FormCreate(Sender: TObject);
     procedure flBoxDblClick(Sender: TObject);
     procedure dlBoxKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FDSitViewerAfterScroll(DataSet: TDataSet);
+    procedure edtFiltroKeyPress(Sender: TObject; var Key: Char);
+    procedure cbFilterMetodoSelect(Sender: TObject);
   private
     procedure SetLabelValueInDetailsTab;
   end;
@@ -93,11 +101,19 @@ begin
     FDSitViewer.ReadLogTxt(openDialog.FileName);
 end;
 
-procedure TfrmSitViewer.cbSitViewerSelect(Sender: TObject);
+procedure TfrmSitViewer.cbFilterEventoLogSelect(Sender: TObject);
 begin
   FDSitViewer.Filter := EmptyStr;
-  if cbSitViewer.ItemIndex <> 0 then
-    FDSitViewer.Filter := Format('eventoLog = %s', [QuotedStr(cbSitViewer.Text)]);
+  if cbFilterEventoLog.ItemIndex <> 0 then
+    FDSitViewer.Filter := Format('eventoLog = %s', [QuotedStr(cbFilterEventoLog.Text)]);
+  FDSitViewer.Filtered := True;
+end;
+
+procedure TfrmSitViewer.cbFilterMetodoSelect(Sender: TObject);
+begin
+  FDSitViewer.Filter := EmptyStr;
+  if cbFilterMetodo.ItemIndex <> 0 then
+    FDSitViewer.Filter := Format('Metodo = %s', [QuotedStr(cbFilterMetodo.Text)]);
   FDSitViewer.Filtered := True;
 end;
 
@@ -106,6 +122,36 @@ procedure TfrmSitViewer.dlBoxKeyDown(Sender: TObject; var Key: Word;
 begin
   if Key = VK_RIGHT then
     dlBox.OpenCurrent;
+end;
+
+procedure TfrmSitViewer.edtFiltroKeyPress(Sender: TObject; var Key: Char);
+var
+  sFieldsFilter: TStringBuilder;
+  i: Integer;
+begin
+  if Key <> #13 then
+    Exit;
+
+  FDSitViewer.DisableControls;
+  try
+    FDSitViewer.Filtered := False;
+
+    FDSitViewer.FilterOptions := [foCaseInsensitive,foNoPartialCompare];
+
+    sFieldsFilter := TStringBuilder.Create;
+    for i := 0 to Pred(grSitViewer.Columns.Count) do
+    begin
+      sFieldsFilter.Append(Format('%s Like %s',[grSitViewer.Columns[i].FieldName,
+        QuotedStr('%' + edtFiltro.Text + '%')]));
+      if i < Pred(grSitViewer.Columns.Count) then
+        sFieldsFilter.Append(' Or ');
+    end;
+
+    FDSitViewer.Filter := sFieldsFilter.ToString;
+    FDSitViewer.Filtered := True;
+  finally
+    FDSitViewer.EnableControls;
+  end;
 end;
 
 procedure TfrmSitViewer.FDSitViewerAfterScroll(DataSet: TDataSet);
@@ -136,15 +182,15 @@ begin
   dlBox.Directory := IniFile.ReadString('Options', 'Directory', sInitialDirectory);
   IniFile.Free;
   pcTop.ActivePage := tsDirectory;
-  pcBottom.ActivePage := tsTexto;
+  pcBottom.ActivePage := tsDetalhes;
 end;
 
 procedure TfrmSitViewer.grSitViewerDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
   State: TGridDrawState);
 begin
-  //if FDSitViewer.FieldByName('EventoLog').AsString = 'Erro' then
-    //grSitViewer.Canvas.Brush.Color := $006262FF;
-  //grSitViewer.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  if FDSitViewer.FieldByName('EventoLog').AsString = 'Erro' then
+    grSitViewer.Canvas.Brush.Color := $006262FF;
+  grSitViewer.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 
 end;
 
@@ -158,6 +204,7 @@ begin
   lblServico.Caption := FDSitViewer.FieldByName('Servico').AsString;
   lblClasse.Caption := FDSitViewer.FieldByName('Classe').AsString;
   lblEventoLog.Caption := FDSitViewer.FieldByName('EventoLog').AsString;
+  lbQtRegisters.Caption := IntToStr(FDSitViewer.RecordCount);
 end;
 
 end.

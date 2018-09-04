@@ -34,10 +34,6 @@ object frmSitViewer: TfrmSitViewer
     TabOrder = 0
     object tsDirectory: TTabSheet
       Caption = 'Arquivos'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object splMiddleDirectory: TSplitter
         Left = 369
         Top = 0
@@ -85,15 +81,21 @@ object frmSitViewer: TfrmSitViewer
     end
     object tsSitViewer: TTabSheet
       AlignWithMargins = True
-      Caption = 'Data'
+      Caption = 'Log Sit'
       ImageIndex = 1
+      object lblFiltro: TLabel
+        Left = 3
+        Top = 259
+        Width = 28
+        Height = 13
+        Caption = 'Filtro:'
+      end
       object grSitViewer: TDBGrid
         AlignWithMargins = True
         Left = 3
         Top = 63
         Width = 755
-        Height = 211
-        Align = alClient
+        Height = 188
         BiDiMode = bdLeftToRight
         DataSource = dsSitViewer
         DrawingStyle = gdsGradient
@@ -152,7 +154,7 @@ object frmSitViewer: TfrmSitViewer
           item
             Expanded = False
             FieldName = 'EventoLog'
-            Width = 55
+            Width = 74
             Visible = True
           end>
       end
@@ -166,21 +168,28 @@ object frmSitViewer: TfrmSitViewer
         BevelOuter = bvNone
         TabOrder = 1
         object grpGridFilter: TGroupBox
-          Left = 0
+          Left = 458
           Top = -2
-          Width = 755
+          Width = 297
           Height = 51
           Caption = ' Filtros '
           TabOrder = 0
           object lblFilterEventoLog: TLabel
-            Left = 608
-            Top = 21
+            Left = 163
+            Top = 22
             Width = 58
             Height = 13
             Caption = 'EventoLog :'
           end
-          object cbSitViewer: TComboBox
-            Left = 671
+          object lblFilterMetodo: TLabel
+            Left = 11
+            Top = 22
+            Width = 43
+            Height = 13
+            Caption = 'Metodo :'
+          end
+          object cbFilterEventoLog: TComboBox
+            Left = 224
             Top = 18
             Width = 66
             Height = 21
@@ -188,23 +197,46 @@ object frmSitViewer: TfrmSitViewer
             ItemIndex = 0
             TabOrder = 0
             Text = '[ Todos ]'
-            OnSelect = cbSitViewerSelect
+            OnSelect = cbFilterEventoLogSelect
             Items.Strings = (
               '[ Todos ]'
               'Sql'
               'Info'
               'Erro')
           end
+          object cbFilterMetodo: TComboBox
+            Left = 57
+            Top = 18
+            Width = 100
+            Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 1
+            Text = '[ Todos ]'
+            OnSelect = cbFilterMetodoSelect
+            Items.Strings = (
+              '[ Todos ]'
+              'Buscar'
+              'Execute'
+              'IniciarProcessamento'
+              'ExecutarServico'
+              'EncerrarProcessamento'
+              'BuscarPeriodo'
+              'Inicializar')
+          end
         end
       end
+      object edtFiltro: TEdit
+        Left = 34
+        Top = 256
+        Width = 724
+        Height = 21
+        TabOrder = 2
+        OnKeyPress = edtFiltroKeyPress
+      end
     end
-    object tsDataOptions: TTabSheet
+    object tsOpcoes: TTabSheet
       Caption = 'Op'#231#245'es'
-      ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object pnlBot: TPanel
@@ -221,7 +253,7 @@ object frmSitViewer: TfrmSitViewer
       Top = 1
       Width = 773
       Height = 137
-      ActivePage = tsTexto
+      ActivePage = tsDetalhes
       Align = alClient
       TabOrder = 0
       object tsTexto: TTabSheet
@@ -241,132 +273,186 @@ object frmSitViewer: TfrmSitViewer
       object tsDetalhes: TTabSheet
         Caption = 'Detalhes'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lbdfData: TLabel
           Left = 21
           Top = 5
-          Width = 23
+          Width = 27
           Height = 13
-          Caption = 'Data'
+          Caption = 'Data:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfIpServidor: TLabel
           Left = 21
           Top = 43
-          Width = 50
+          Width = 54
           Height = 13
-          Caption = 'IpServidor'
+          Caption = 'IpServidor:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfBase: TLabel
           Left = 21
           Top = 62
-          Width = 23
+          Width = 27
           Height = 13
-          Caption = 'Base'
+          Caption = 'Base:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfHora: TLabel
           Left = 21
           Top = 24
-          Width = 23
+          Width = 27
           Height = 13
-          Caption = 'Hora'
+          Caption = 'Hora:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfServico: TLabel
           Left = 297
           Top = 3
-          Width = 35
+          Width = 39
           Height = 13
-          Caption = 'Servico'
+          Caption = 'Servico:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfClasse: TLabel
           Left = 297
           Top = 22
-          Width = 31
+          Width = 35
           Height = 13
-          Caption = 'Classe'
+          Caption = 'Classe:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfMetodo: TLabel
           Left = 21
           Top = 81
-          Width = 36
+          Width = 40
           Height = 13
-          Caption = 'Metodo'
+          Caption = 'Metodo:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lbdfEventoLog: TLabel
           Left = 297
           Top = 41
-          Width = 51
+          Width = 55
           Height = 13
-          Caption = 'EventoLog'
+          Caption = 'EventoLog:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
         object lblData: TLabel
-          Left = 98
+          Left = 93
           Top = 5
           Width = 3
           Height = 13
         end
         object lblHora: TLabel
-          Left = 98
+          Left = 93
           Top = 24
           Width = 3
           Height = 13
         end
         object lblIpServidor: TLabel
-          Left = 98
+          Left = 93
           Top = 43
           Width = 3
           Height = 13
         end
         object lblBase: TLabel
-          Left = 98
+          Left = 93
           Top = 62
           Width = 3
           Height = 13
         end
         object lblMetodo: TLabel
-          Left = 98
+          Left = 93
           Top = 81
           Width = 3
           Height = 13
         end
         object lblServico: TLabel
-          Left = 386
+          Left = 381
           Top = 3
           Width = 3
           Height = 13
         end
         object lblClasse: TLabel
-          Left = 386
+          Left = 381
           Top = 22
           Width = 3
           Height = 13
         end
         object lblEventoLog: TLabel
-          Left = 386
+          Left = 381
           Top = 41
           Width = 3
           Height = 13
+        end
+        object lbRegisters: TLabel
+          Left = 715
+          Top = 94
+          Width = 45
+          Height = 13
+          Caption = 'Registros'
+        end
+        object lbQtRegisters: TLabel
+          Left = 706
+          Top = 94
+          Width = 3
+          Height = 13
+          Alignment = taRightJustify
         end
       end
     end
   end
   object dsSitViewer: TDataSource
     DataSet = FDSitViewer
-    Left = 360
-    Top = 160
+    Left = 642
+    Top = 214
   end
   object openDialog: TOpenDialog
     DefaultExt = '.txt'
     FileName = '.txt'
     InitialDir = 'C:'
-    Left = 440
-    Top = 160
-  end
-  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
-    Provider = 'Forms'
-    Left = 720
+    Left = 722
+    Top = 214
   end
   object FDSitViewer: TFDSitViewer
     AfterScroll = FDSitViewerAfterScroll
@@ -377,7 +463,8 @@ object frmSitViewer: TfrmSitViewer
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 616
+    Left = 618
+    Top = 164
     object FDSitViewerData: TStringField
       DisplayWidth = 10
       FieldName = 'Data'
@@ -422,5 +509,10 @@ object frmSitViewer: TfrmSitViewer
       FieldName = 'Texto'
       Size = 5000
     end
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 722
+    Top = 164
   end
 end

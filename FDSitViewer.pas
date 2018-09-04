@@ -52,12 +52,12 @@ begin
       while nIndexLine < slArchive.Count do
       begin
         sOriginalLine := slArchive[nIndexLine];
-        nTextPosition := Pos('texto=', sOriginalLine);
+        nTextPosition := Pos('texto='.ToUpper, sOriginalLine.ToUpper);
 
         if nTextPosition = 0 then
         begin
           sOriginalLine := FixLineRegister(nIndexLine,slArchive);
-          nTextPosition := Pos('texto=', sOriginalLine);
+          nTextPosition := Pos('texto='.ToUpper, sOriginalLine.ToUpper);
           Self.Delete;
         end;
 
