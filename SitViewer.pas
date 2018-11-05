@@ -28,19 +28,6 @@ type
     FDSitViewerMetodo: TStringField;
     FDSitViewerEventoLog: TStringField;
     FDSitViewerTexto: TStringField;
-    pcTop: TPageControl;
-    tsDirectory: TTabSheet;
-    tsSitViewer: TTabSheet;
-    grSitViewer: TDBGrid;
-    pnlTop: TPanel;
-    pnlLeft: TPanel;
-    pnlRight: TPanel;
-    dlBox: TDirectoryListBox;
-    flBox: TFileListBox;
-    splMiddleDirectory: TSplitter;
-    grpGridFilter: TGroupBox;
-    cbFilterEventoLog: TComboBox;
-    lblFilterEventoLog: TLabel;
     pnlBot: TPanel;
     splSitViewer: TSplitter;
     pcBottom: TPageControl;
@@ -65,12 +52,29 @@ type
     lblEventoLog: TLabel;
     lbRegisters: TLabel;
     lbQtRegisters: TLabel;
-    lblFiltro: TLabel;
-    edtFiltro: TEdit;
-    tsOpcoes: TTabSheet;
-    lblFilterMetodo: TLabel;
-    cbFilterMetodo: TComboBox;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    cdsFilterSitViewer: TClientDataSet;
+    dsFilterSitViewer: TDataSource;
+    cdsFilterSitViewerData: TStringField;
+    cdsFilterSitViewerHora: TStringField;
+    cdsFilterSitViewerIpServidor: TStringField;
+    cdsFilterSitViewerBase: TStringField;
+    cdsFilterSitViewerServico: TStringField;
+    cdsFilterSitViewerClasse: TStringField;
+    cdsFilterSitViewerMetodo: TStringField;
+    cdsFilterSitViewerEventoLog: TStringField;
+    cdsFilterSitViewerTexto: TStringField;
+    pcTop: TPageControl;
+    tsDirectory: TTabSheet;
+    splMiddleDirectory: TSplitter;
+    pnlLeft: TPanel;
+    dlBox: TDirectoryListBox;
+    pnlRight: TPanel;
+    flBox: TFileListBox;
+    tsSitViewer: TTabSheet;
+    grSitViewer: TDBGrid;
+    grFilterSitViewer: TDBGrid;
+    edtFiltro: TEdit;
     procedure BitBtn1Click(Sender: TObject);
     procedure cbFilterEventoLogSelect(Sender: TObject);
     procedure grSitViewerDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
@@ -81,6 +85,7 @@ type
     procedure FDSitViewerAfterScroll(DataSet: TDataSet);
     procedure edtFiltroKeyPress(Sender: TObject; var Key: Char);
     procedure cbFilterMetodoSelect(Sender: TObject);
+    procedure grFilterSitViewerKeyPress(Sender: TObject; var Key: Char);
   private
     procedure SetLabelValueInDetailsTab;
   end;
@@ -104,16 +109,17 @@ end;
 procedure TfrmSitViewer.cbFilterEventoLogSelect(Sender: TObject);
 begin
   FDSitViewer.Filter := EmptyStr;
-  if cbFilterEventoLog.ItemIndex <> 0 then
+  {if cbFilterEventoLog.ItemIndex <> 0 then
     FDSitViewer.Filter := Format('eventoLog = %s', [QuotedStr(cbFilterEventoLog.Text)]);
+  }
   FDSitViewer.Filtered := True;
 end;
 
 procedure TfrmSitViewer.cbFilterMetodoSelect(Sender: TObject);
 begin
   FDSitViewer.Filter := EmptyStr;
-  if cbFilterMetodo.ItemIndex <> 0 then
-    FDSitViewer.Filter := Format('Metodo = %s', [QuotedStr(cbFilterMetodo.Text)]);
+  {if cbFilterMetodo.ItemIndex <> 0 then
+    FDSitViewer.Filter := Format('Metodo = %s', [QuotedStr(cbFilterMetodo.Text)]);}
   FDSitViewer.Filtered := True;
 end;
 
@@ -175,14 +181,46 @@ var
   lFileName: string;
   sInitialDirectory: string;
 begin
-  sInitialDirectory := 'C:\Logsit';
+  sInitialDirectory := 'C:\LogSit';
   lFileName := ExtractFilePath(ParamStr(0)) + 'SitViewer.ini';
   IniFile := TIniFile.Create(lFileName);
 
   dlBox.Directory := IniFile.ReadString('Options', 'Directory', sInitialDirectory);
+  dlBox.Directory := sInitialDirectory;
+
   IniFile.Free;
   pcTop.ActivePage := tsDirectory;
   pcBottom.ActivePage := tsDetalhes;
+
+  cdsFilterSitViewer.AppendRecord([]);
+end;
+
+procedure TfrmSitViewer.grFilterSitViewerKeyPress(Sender: TObject; var Key: Char);
+var
+  nGrColumnIndex: Integer;
+  sGrColumnName: String;
+begin
+  if Key = #13 then
+  begin
+    if (cdsFilterSitViewer.state in dsEditModes) then
+      cdsFilterSitViewer.Post;
+
+    nGrColumnIndex := grFilterSitViewer.SelectedIndex;
+    sGrColumnName := grFilterSitViewer.SelectedField.FieldName;
+
+    FDSitViewer.Filtered := False;
+
+    FDSitViewer.FilterOptions := [foCaseInsensitive,foNoPartialCompare];
+
+    if grFilterSitViewer.Fields[nGrColumnIndex].AsString.IsEmpty then
+      Exit;
+
+      cdsFilterSitViewer.Filter := Format('%s = %s',[
+        sGrColumnName, grFilterSitViewer.Fields[nGrColumnIndex].AsString.QuotedString]);
+
+      FDSitViewer.Filter := cdsFilterSitViewer.Filter;
+      FDSitViewer.Filtered := True;
+  end;
 end;
 
 procedure TfrmSitViewer.grSitViewerDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
@@ -191,7 +229,6 @@ begin
   if FDSitViewer.FieldByName('EventoLog').AsString = 'Erro' then
     grSitViewer.Canvas.Brush.Color := $006262FF;
   grSitViewer.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-
 end;
 
 procedure TfrmSitViewer.SetLabelValueInDetailsTab;

@@ -24,221 +24,6 @@ object frmSitViewer: TfrmSitViewer
     ExplicitLeft = -1
     ExplicitTop = 272
   end
-  object pcTop: TPageControl
-    Left = 0
-    Top = 0
-    Width = 775
-    Height = 311
-    ActivePage = tsSitViewer
-    Align = alClient
-    TabOrder = 0
-    object tsDirectory: TTabSheet
-      Caption = 'Arquivos'
-      object splMiddleDirectory: TSplitter
-        Left = 369
-        Top = 0
-        Width = 1
-        Height = 283
-        ExplicitHeight = 286
-      end
-      object pnlLeft: TPanel
-        Left = 0
-        Top = 0
-        Width = 369
-        Height = 283
-        Align = alLeft
-        TabOrder = 0
-        object dlBox: TDirectoryListBox
-          Left = 1
-          Top = 1
-          Width = 367
-          Height = 281
-          Align = alClient
-          FileList = flBox
-          TabOrder = 0
-          OnKeyDown = dlBoxKeyDown
-        end
-      end
-      object pnlRight: TPanel
-        Left = 370
-        Top = 0
-        Width = 397
-        Height = 283
-        Align = alClient
-        TabOrder = 1
-        object flBox: TFileListBox
-          Left = 1
-          Top = 1
-          Width = 395
-          Height = 281
-          Align = alClient
-          ItemHeight = 13
-          Mask = '*.txt'
-          TabOrder = 0
-          OnDblClick = flBoxDblClick
-        end
-      end
-    end
-    object tsSitViewer: TTabSheet
-      AlignWithMargins = True
-      Caption = 'Log Sit'
-      ImageIndex = 1
-      object lblFiltro: TLabel
-        Left = 3
-        Top = 259
-        Width = 28
-        Height = 13
-        Caption = 'Filtro:'
-      end
-      object grSitViewer: TDBGrid
-        AlignWithMargins = True
-        Left = 3
-        Top = 63
-        Width = 755
-        Height = 188
-        BiDiMode = bdLeftToRight
-        DataSource = dsSitViewer
-        DrawingStyle = gdsGradient
-        ParentBiDiMode = False
-        ReadOnly = True
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -11
-        TitleFont.Name = 'Tahoma'
-        TitleFont.Style = []
-        OnDrawColumnCell = grSitViewerDrawColumnCell
-        Columns = <
-          item
-            Expanded = False
-            FieldName = 'Data'
-            Width = 61
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Hora'
-            Width = 51
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'IpServidor'
-            Width = 86
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Base'
-            Width = 58
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Servico'
-            Width = 132
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Classe'
-            Width = 159
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'Metodo'
-            Width = 112
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'EventoLog'
-            Width = 74
-            Visible = True
-          end>
-      end
-      object pnlTop: TPanel
-        AlignWithMargins = True
-        Left = 3
-        Top = 3
-        Width = 755
-        Height = 54
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        object grpGridFilter: TGroupBox
-          Left = 458
-          Top = -2
-          Width = 297
-          Height = 51
-          Caption = ' Filtros '
-          TabOrder = 0
-          object lblFilterEventoLog: TLabel
-            Left = 163
-            Top = 22
-            Width = 58
-            Height = 13
-            Caption = 'EventoLog :'
-          end
-          object lblFilterMetodo: TLabel
-            Left = 11
-            Top = 22
-            Width = 43
-            Height = 13
-            Caption = 'Metodo :'
-          end
-          object cbFilterEventoLog: TComboBox
-            Left = 224
-            Top = 18
-            Width = 66
-            Height = 21
-            Style = csDropDownList
-            ItemIndex = 0
-            TabOrder = 0
-            Text = '[ Todos ]'
-            OnSelect = cbFilterEventoLogSelect
-            Items.Strings = (
-              '[ Todos ]'
-              'Sql'
-              'Info'
-              'Erro')
-          end
-          object cbFilterMetodo: TComboBox
-            Left = 57
-            Top = 18
-            Width = 100
-            Height = 21
-            Style = csDropDownList
-            ItemIndex = 0
-            TabOrder = 1
-            Text = '[ Todos ]'
-            OnSelect = cbFilterMetodoSelect
-            Items.Strings = (
-              '[ Todos ]'
-              'Buscar'
-              'Execute'
-              'IniciarProcessamento'
-              'ExecutarServico'
-              'EncerrarProcessamento'
-              'BuscarPeriodo'
-              'Inicializar')
-          end
-        end
-      end
-      object edtFiltro: TEdit
-        Left = 34
-        Top = 256
-        Width = 724
-        Height = 21
-        TabOrder = 2
-        OnKeyPress = edtFiltroKeyPress
-      end
-    end
-    object tsOpcoes: TTabSheet
-      Caption = 'Op'#231#245'es'
-    end
-  end
   object pnlBot: TPanel
     Left = 0
     Top = 312
@@ -247,7 +32,7 @@ object frmSitViewer: TfrmSitViewer
     Align = alBottom
     Color = clWhite
     ParentBackground = False
-    TabOrder = 1
+    TabOrder = 0
     object pcBottom: TPageControl
       Left = 1
       Top = 1
@@ -258,6 +43,10 @@ object frmSitViewer: TfrmSitViewer
       TabOrder = 0
       object tsTexto: TTabSheet
         Caption = 'Texto'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object dbMmTexto: TDBMemo
           Left = 0
           Top = 0
@@ -442,6 +231,220 @@ object frmSitViewer: TfrmSitViewer
       end
     end
   end
+  object pcTop: TPageControl
+    Left = 0
+    Top = 0
+    Width = 775
+    Height = 311
+    ActivePage = tsSitViewer
+    Align = alClient
+    TabOrder = 1
+    object tsDirectory: TTabSheet
+      Caption = 'Arquivos'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object splMiddleDirectory: TSplitter
+        Left = 369
+        Top = 0
+        Width = 1
+        Height = 283
+        ExplicitHeight = 286
+      end
+      object pnlLeft: TPanel
+        Left = 0
+        Top = 0
+        Width = 369
+        Height = 283
+        Align = alLeft
+        TabOrder = 0
+        object dlBox: TDirectoryListBox
+          Left = 1
+          Top = 1
+          Width = 367
+          Height = 281
+          Align = alClient
+          FileList = flBox
+          TabOrder = 0
+          OnKeyDown = dlBoxKeyDown
+        end
+      end
+      object pnlRight: TPanel
+        Left = 370
+        Top = 0
+        Width = 397
+        Height = 283
+        Align = alClient
+        TabOrder = 1
+        object flBox: TFileListBox
+          Left = 1
+          Top = 1
+          Width = 395
+          Height = 281
+          Align = alClient
+          ItemHeight = 13
+          Mask = '*.txt'
+          TabOrder = 0
+          OnDblClick = flBoxDblClick
+        end
+      end
+    end
+    object tsSitViewer: TTabSheet
+      AlignWithMargins = True
+      Caption = 'Log Sit'
+      ImageIndex = 1
+      object grSitViewer: TDBGrid
+        AlignWithMargins = True
+        Left = 3
+        Top = 48
+        Width = 755
+        Height = 205
+        Align = alClient
+        BiDiMode = bdLeftToRight
+        DataSource = dsSitViewer
+        DrawingStyle = gdsGradient
+        Options = [dgEditing, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        ParentBiDiMode = False
+        ReadOnly = True
+        TabOrder = 0
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        OnDrawColumnCell = grSitViewerDrawColumnCell
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'Data'
+            Width = 61
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Hora'
+            Width = 51
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'IpServidor'
+            Width = 86
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Base'
+            Width = 58
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Servico'
+            Width = 132
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Classe'
+            Width = 159
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Metodo'
+            Width = 112
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'EventoLog'
+            Width = 74
+            Visible = True
+          end>
+      end
+      object grFilterSitViewer: TDBGrid
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 755
+        Height = 39
+        Align = alTop
+        BiDiMode = bdLeftToRight
+        DataSource = dsFilterSitViewer
+        DrawingStyle = gdsGradient
+        Options = [dgEditing, dgAlwaysShowEditor, dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+        ParentBiDiMode = False
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        OnKeyPress = grFilterSitViewerKeyPress
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'Data'
+            Width = 61
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Hora'
+            Width = 51
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'IpServidor'
+            Width = 86
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Base'
+            Width = 59
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Servico'
+            Width = 130
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Classe'
+            Width = 159
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'Metodo'
+            Width = 113
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'EventoLog'
+            Width = 73
+            Visible = True
+          end>
+      end
+      object edtFiltro: TEdit
+        Left = 0
+        Top = 256
+        Width = 761
+        Height = 21
+        Align = alBottom
+        TabOrder = 2
+        TextHint = 'Filtro'
+        OnKeyPress = edtFiltroKeyPress
+      end
+    end
+  end
   object dsSitViewer: TDataSource
     DataSet = FDSitViewer
     Left = 642
@@ -514,5 +517,71 @@ object frmSitViewer: TfrmSitViewer
     Provider = 'Forms'
     Left = 722
     Top = 164
+  end
+  object cdsFilterSitViewer: TClientDataSet
+    PersistDataPacket.Data = {
+      0E0100009619E0BD0100000018000000090000000000030000000E0104446174
+      610100490000000100055749445448020002000A0004486F7261010049000000
+      01000557494454480200020008000A49705365727669646F7201004900000001
+      00055749445448020002000F0004426173650100490000000100055749445448
+      020002001400075365727669636F010049000000010005574944544802000200
+      640006436C617373650100490000000100055749445448020002003200064D65
+      746F646F0100490000000100055749445448020002003200094576656E746F4C
+      6F67010049000000010005574944544802000200040005546578746F02004900
+      000001000557494454480200020088130000}
+    Active = True
+    Aggregates = <>
+    Params = <>
+    Left = 617
+    Top = 115
+    object cdsFilterSitViewerData: TStringField
+      DisplayWidth = 10
+      FieldName = 'Data'
+      Size = 10
+    end
+    object cdsFilterSitViewerHora: TStringField
+      DisplayWidth = 8
+      FieldName = 'Hora'
+      Size = 8
+    end
+    object cdsFilterSitViewerIpServidor: TStringField
+      DisplayWidth = 15
+      FieldName = 'IpServidor'
+      Size = 15
+    end
+    object cdsFilterSitViewerBase: TStringField
+      DisplayWidth = 20
+      FieldName = 'Base'
+    end
+    object cdsFilterSitViewerServico: TStringField
+      DisplayWidth = 12
+      FieldName = 'Servico'
+      Size = 100
+    end
+    object cdsFilterSitViewerClasse: TStringField
+      DisplayWidth = 7
+      FieldName = 'Classe'
+      Size = 50
+    end
+    object cdsFilterSitViewerMetodo: TStringField
+      DisplayWidth = 6
+      FieldName = 'Metodo'
+      Size = 50
+    end
+    object cdsFilterSitViewerEventoLog: TStringField
+      DisplayWidth = 10
+      FieldName = 'EventoLog'
+      Size = 4
+    end
+    object cdsFilterSitViewerTexto: TStringField
+      DisplayWidth = 5000
+      FieldName = 'Texto'
+      Size = 5000
+    end
+  end
+  object dsFilterSitViewer: TDataSource
+    DataSet = cdsFilterSitViewer
+    Left = 719
+    Top = 123
   end
 end
