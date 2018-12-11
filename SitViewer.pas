@@ -109,17 +109,12 @@ end;
 procedure TfrmSitViewer.cbFilterEventoLogSelect(Sender: TObject);
 begin
   FDSitViewer.Filter := EmptyStr;
-  {if cbFilterEventoLog.ItemIndex <> 0 then
-    FDSitViewer.Filter := Format('eventoLog = %s', [QuotedStr(cbFilterEventoLog.Text)]);
-  }
   FDSitViewer.Filtered := True;
 end;
 
 procedure TfrmSitViewer.cbFilterMetodoSelect(Sender: TObject);
 begin
   FDSitViewer.Filter := EmptyStr;
-  {if cbFilterMetodo.ItemIndex <> 0 then
-    FDSitViewer.Filter := Format('Metodo = %s', [QuotedStr(cbFilterMetodo.Text)]);}
   FDSitViewer.Filtered := True;
 end;
 
