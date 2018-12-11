@@ -12,7 +12,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FDSitViewer,
-  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.FileCtrl, Vcl.Mask;
+  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.FileCtrl, Vcl.Mask, MidasLib;
 
 type
   TfrmSitViewer = class(TForm)
@@ -176,17 +176,16 @@ begin
 end;
 
 procedure TfrmSitViewer.FormCreate(Sender: TObject);
+const
+  DEFAULT_DIRECTORY = 'C:\';
 var
   IniFile: TIniFile;
   lFileName: string;
-  sInitialDirectory: string;
 begin
-  sInitialDirectory := 'C:\LogSit';
   lFileName := ExtractFilePath(ParamStr(0)) + 'SitViewer.ini';
   IniFile := TIniFile.Create(lFileName);
 
-  dlBox.Directory := IniFile.ReadString('Options', 'Directory', sInitialDirectory);
-  dlBox.Directory := sInitialDirectory;
+  dlBox.Directory := IniFile.ReadString('Options', 'Directory', DEFAULT_DIRECTORY);
 
   IniFile.Free;
   pcTop.ActivePage := tsDirectory;
