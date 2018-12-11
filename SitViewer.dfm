@@ -2,7 +2,7 @@ object frmSitViewer: TfrmSitViewer
   Left = 0
   Top = 0
   Caption = 'Gerenciador - Sit Viewer'
-  ClientHeight = 451
+  ClientHeight = 453
   ClientWidth = 775
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object frmSitViewer: TfrmSitViewer
   TextHeight = 13
   object splSitViewer: TSplitter
     Left = 0
-    Top = 311
+    Top = 313
     Width = 775
     Height = 1
     Cursor = crVSplit
@@ -26,13 +26,14 @@ object frmSitViewer: TfrmSitViewer
   end
   object pnlBot: TPanel
     Left = 0
-    Top = 312
+    Top = 314
     Width = 775
     Height = 139
     Align = alBottom
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
+    ExplicitTop = 312
     object pcBottom: TPageControl
       Left = 1
       Top = 1
@@ -43,10 +44,7 @@ object frmSitViewer: TfrmSitViewer
       TabOrder = 0
       object tsTexto: TTabSheet
         Caption = 'Texto'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        ExplicitWidth = 796
         object dbMmTexto: TDBMemo
           Left = 0
           Top = 0
@@ -57,11 +55,16 @@ object frmSitViewer: TfrmSitViewer
           DataSource = dsSitViewer
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 796
         end
       end
       object tsDetalhes: TTabSheet
         Caption = 'Detalhes'
         ImageIndex = 1
+        ExplicitLeft = 2
+        DesignSize = (
+          765
+          109)
         object lbdfData: TLabel
           Left = 21
           Top = 5
@@ -217,16 +220,19 @@ object frmSitViewer: TfrmSitViewer
         object lbRegisters: TLabel
           Left = 715
           Top = 94
-          Width = 45
+          Width = 46
           Height = 13
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
           Caption = 'Registros'
         end
         object lbQtRegisters: TLabel
-          Left = 706
+          Left = 709
           Top = 94
           Width = 3
           Height = 13
           Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
         end
       end
     end
@@ -235,58 +241,63 @@ object frmSitViewer: TfrmSitViewer
     Left = 0
     Top = 0
     Width = 775
-    Height = 311
+    Height = 313
     ActivePage = tsSitViewer
     Align = alClient
     TabOrder = 1
+    ExplicitHeight = 311
     object tsDirectory: TTabSheet
       Caption = 'Arquivos'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 798
+      ExplicitHeight = 283
       object splMiddleDirectory: TSplitter
         Left = 369
         Top = 0
         Width = 1
-        Height = 283
+        Height = 285
         ExplicitHeight = 286
       end
       object pnlLeft: TPanel
         Left = 0
         Top = 0
         Width = 369
-        Height = 283
+        Height = 285
         Align = alLeft
         TabOrder = 0
+        ExplicitHeight = 283
         object dlBox: TDirectoryListBox
           Left = 1
           Top = 1
           Width = 367
-          Height = 281
+          Height = 283
           Align = alClient
           FileList = flBox
           TabOrder = 0
           OnKeyDown = dlBoxKeyDown
+          ExplicitHeight = 281
         end
       end
       object pnlRight: TPanel
         Left = 370
         Top = 0
         Width = 397
-        Height = 283
+        Height = 285
         Align = alClient
         TabOrder = 1
+        ExplicitWidth = 428
+        ExplicitHeight = 283
         object flBox: TFileListBox
           Left = 1
           Top = 1
           Width = 395
-          Height = 281
+          Height = 283
           Align = alClient
           ItemHeight = 13
           Mask = '*.txt'
           TabOrder = 0
           OnDblClick = flBoxDblClick
+          ExplicitWidth = 426
+          ExplicitHeight = 281
         end
       end
     end
@@ -294,12 +305,13 @@ object frmSitViewer: TfrmSitViewer
       AlignWithMargins = True
       Caption = 'Log Sit'
       ImageIndex = 1
+      ExplicitHeight = 277
       object grSitViewer: TDBGrid
         AlignWithMargins = True
         Left = 3
         Top = 48
         Width = 755
-        Height = 205
+        Height = 207
         Align = alClient
         BiDiMode = bdLeftToRight
         DataSource = dsSitViewer
@@ -435,13 +447,14 @@ object frmSitViewer: TfrmSitViewer
       end
       object edtFiltro: TEdit
         Left = 0
-        Top = 256
+        Top = 258
         Width = 761
         Height = 21
         Align = alBottom
         TabOrder = 2
         TextHint = 'Filtro'
         OnKeyPress = edtFiltroKeyPress
+        ExplicitTop = 256
       end
     end
   end
