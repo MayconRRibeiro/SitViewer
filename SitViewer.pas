@@ -178,11 +178,12 @@ end;
 procedure TfrmSitViewer.FormCreate(Sender: TObject);
 const
   DEFAULT_DIRECTORY = 'C:\';
+  INI_FILENAME = 'SitViewer.ini';
 var
   IniFile: TIniFile;
   lFileName: string;
 begin
-  lFileName := ExtractFilePath(ParamStr(0)) + 'SitViewer.ini';
+  lFileName := ExtractFilePath(ParamStr(0)) + INI_FILENAME;
   IniFile := TIniFile.Create(lFileName);
 
   dlBox.Directory := IniFile.ReadString('Options', 'Directory', DEFAULT_DIRECTORY);
