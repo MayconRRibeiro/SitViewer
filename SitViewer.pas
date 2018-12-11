@@ -88,6 +88,7 @@ type
     procedure grFilterSitViewerKeyPress(Sender: TObject; var Key: Char);
   private
     procedure SetLabelValueInDetailsTab;
+    procedure ClearFilter;
   end;
 
 var
@@ -108,11 +109,15 @@ end;
 
 procedure TfrmSitViewer.cbFilterEventoLogSelect(Sender: TObject);
 begin
-  FDSitViewer.Filter := EmptyStr;
-  FDSitViewer.Filtered := True;
+  ClearFilter;
 end;
 
 procedure TfrmSitViewer.cbFilterMetodoSelect(Sender: TObject);
+begin
+  ClearFilter;
+end;
+
+procedure TfrmSitViewer.ClearFilter;
 begin
   FDSitViewer.Filter := EmptyStr;
   FDSitViewer.Filtered := True;
