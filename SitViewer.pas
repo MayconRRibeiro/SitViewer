@@ -1,5 +1,7 @@
 unit SitViewer;
 
+{$WARN SYMBOL_PLATFORM OFF}
+
 interface
 
 uses
@@ -138,13 +140,14 @@ begin
   if Key <> #13 then
     Exit;
 
+  sFieldsFilter := TStringBuilder.Create;
   FDSitViewer.DisableControls;
   try
     FDSitViewer.Filtered := False;
 
     FDSitViewer.FilterOptions := [foCaseInsensitive,foNoPartialCompare];
 
-    sFieldsFilter := TStringBuilder.Create;
+
     for i := 0 to Pred(grSitViewer.Columns.Count) do
     begin
       sFieldsFilter.Append(Format('%s Like %s',[grSitViewer.Columns[i].FieldName,
@@ -157,6 +160,7 @@ begin
     FDSitViewer.Filtered := True;
   finally
     FDSitViewer.EnableControls;
+    sFieldsFilter.Free;
   end;
 end;
 
@@ -185,10 +189,11 @@ var
 begin
   lFileName := ExtractFilePath(ParamStr(0)) + INI_FILENAME;
   IniFile := TIniFile.Create(lFileName);
-
-  dlBox.Directory := IniFile.ReadString('Options', 'Directory', DEFAULT_DIRECTORY);
-
-  IniFile.Free;
+  try
+    dlBox.Directory := IniFile.ReadString('Options', 'Directory', DEFAULT_DIRECTORY);
+  finally
+    IniFile.Free;
+  end;
   pcTop.ActivePage := tsDirectory;
   pcBottom.ActivePage := tsDetalhes;
 

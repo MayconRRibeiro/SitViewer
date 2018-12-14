@@ -58,6 +58,10 @@ object frmSitViewer: TfrmSitViewer
       object tsDetalhes: TTabSheet
         Caption = 'Detalhes'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         DesignSize = (
           765
           109)
@@ -243,6 +247,10 @@ object frmSitViewer: TfrmSitViewer
     TabOrder = 1
     object tsDirectory: TTabSheet
       Caption = 'Arquivos'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object splMiddleDirectory: TSplitter
         Left = 369
         Top = 0

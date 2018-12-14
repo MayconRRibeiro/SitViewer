@@ -38,10 +38,12 @@ var
   sOriginalLine: string;
   sFormattedLine: string;
   nTextPosition:integer;
+  lFileStream: TFileStream;
 begin
   slArchive := TStringList.Create;
+  lFileStream := TFileStream.Create(psFileName, fmOpenRead or fmShareDenyNone);
   try
-    slArchive.LoadFromFile(psFileName);
+    slArchive.LoadFromStream(lFileStream);
 
     slRegister := TStringList.Create;
     try
@@ -49,6 +51,8 @@ begin
       slRegister.StrictDelimiter := True;
 
       nIndexLine := 0;
+      InitSitViewer;
+      Self.EmptyDataSet;
       while nIndexLine < slArchive.Count do
       begin
         sOriginalLine := slArchive[nIndexLine];
@@ -75,6 +79,7 @@ begin
     end;
   finally
     FreeAndNil(slArchive);
+    lFileStream.Free;
   end;
 end;
 
@@ -82,7 +87,6 @@ procedure TFDSitViewer.GetValueLogTxt(pLogData: TFDMemTable;const pSlRegister: T
 var
   svTexto: integer;
 begin
-  InitSitViewer;
   svTexto := getSvTexto(pSlRegister);
   with pSlRegister do
   begin
